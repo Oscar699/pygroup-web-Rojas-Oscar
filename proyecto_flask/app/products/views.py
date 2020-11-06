@@ -29,6 +29,7 @@ def resp(name):
     render_template (). Esta función toma un nombre de archivo de plantilla y una lista variable de argumentos de 
     plantilla y devuelve la misma plantilla, pero con todos los marcadores de posición en ella
     reemplazados por valores reales.
+    
     Fuente: https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-ii-templates
     """
 
