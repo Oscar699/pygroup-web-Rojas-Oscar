@@ -1,13 +1,21 @@
 import sys
 from http import HTTPStatus
 from flask import Blueprint, Response, request, render_template
+from app.products.forms import CreateCategoryForm, CreateProductForm
 
 from app.products.models import (
     get_all_categories,
     create_new_category,
     get_all_products,
     get_product_by_id,
+    update_product_stock,
+    create_new_product,
+    delete_product_by_id,
+    create_stock_by_product,
+    update_product_stock,
+    get_stock_by_product
 )
+
 
 products = Blueprint("products", __name__, url_prefix="/products")
 test = Blueprint('test', __name__, url_prefix='/Homework2flask')
@@ -84,6 +92,65 @@ def get_categories():
     return RESPONSE_BODY, status_code
 
 
+@products.route("/add-product", methods=["POST"])
+def create_product():
+    data = request.json
+    product = create_new_product(data["name"], data["price"], data["weight"],
+                                 data["description"], data["refundable"], data["category_id"])
+    if product != []:
+        RESPONSE_BODY["message"] = "OK. product created!"
+        RESPONSE_BODY["data"] = product
+        status_code = HTTPStatus.CREATED
+    else:
+        RESPONSE_BODY["message"] = "Can't create product"
+        status_code = HTTPStatus.NOT_FOUND
+    return RESPONSE_BODY, status_code
+
+
+@products.route("/add-product-form-old", methods=["GET", "POST"])
+def create_product_form_old():
+    if request.method == 'POST':
+        if request.form["refundable"] == "True":
+            refundable = True
+        else:
+            refundable = False
+        product = create_new_product(request.form["name"], request.form["price"], request.form["weight"],
+                                     request.form["description"], refundable, request.form["category_id"])
+        RESPONSE_BODY["message"] = "Product {} created".format(request.form["name"])
+        RESPONSE_BODY["data"] = product
+        return RESPONSE_BODY, HTTPStatus.OK
+    return render_template('create-product-form-old.html')
+
+
+@products.route("/add-product-form", methods=["GET", "POST"])
+def create_product_form():
+    form_product = CreateProductForm()
+    if request.method == 'POST' and form_product.validate():
+        create_new_product(name=form_product.name.data, price=form_product.price.data, weight=form_product.weight.data,
+                           description=form_product.description.data, refundable=form_product.refundable.data, category_id=form_product.category_id.data)
+
+    return render_template('create-product-form.html', form=form_product)
+
+
+@products.route("/add-category-form", methods=["GET", "POST"])
+def create_category_form():
+    form_category = CreateCategoryForm()
+    if request.method == 'POST' and form_category.validate():
+        create_new_category(name=form_category.name.data)
+
+    return render_template('create_category_form.html', form=form_category)
+
+
+@products.route("/add-category-form-old", methods=["GET","POST"])
+def create_category_form_old():
+    if request.method == 'POST':
+        category = create_new_category(request.form["name"])
+        RESPONSE_BODY["message"] = "Category {} created".format(request.form["name"])
+        RESPONSE_BODY["data"] = category
+        return RESPONSE_BODY, HTTPStatus.OK
+    return render_template('create_category_form_old.html')
+
+
 @products.route("/add-category", methods=["POST"])
 def create_category():
     """
@@ -101,6 +168,13 @@ def create_category():
 
     return RESPONSE_BODY, status_code
 
+
+@products.route("/delete-product/<int:id>")
+def delete_product(id):
+    delete_product_by_id(id)
+    RESPONSE_BODY["message"] = "Product deleted"
+
+    return RESPONSE_BODY, HTTPStatus.OK
 
 @products.route("/")
 def get_products():
@@ -139,20 +213,24 @@ def get_products_that_need_restock():
 
 
 @products.route("/register-product-stock/<int:id>", methods=["PUT", "POST"])
-def register_product_refund_in_stock():
+def register_product_in_stock(id):
 
     # TODO Complete this view to update stock for product when a register for
     # this products exists. If not create the new register in DB
 
-    status_code = HTTPStatus.CREATED
     if request.method == "PUT":
-        RESPONSE_BODY["message"] = \
-            "Stock for this product were updated successfully!"
+        data = request.json
+        RESPONSE_BODY["message"] = "Stock for this product were updated successfully!"
+        RESPONSE_BODY["data"] = update_product_stock(id, data["quantity"])
         status_code = HTTPStatus.OK
+
     elif request.method == "POST":
-        RESPONSE_BODY["message"] = \
-            "Stock for this product were created successfully!"
-        pass
+        data = request.json
+        RESPONSE_BODY["message"] = "Stock for this product were created successfully!"
+        RESPONSE_BODY["data"] = create_stock_by_product(id, data["quantity"])
+        status_code = HTTPStatus.CREATED
     else:
         RESPONSE_BODY["message"] = "Method not Allowed"
         status_code = HTTPStatus.METHOD_NOT_ALLOWED
+
+    return RESPONSE_BODY, status_code
