@@ -2,6 +2,7 @@ import sys
 from http import HTTPStatus
 from flask import Blueprint, Response, request, render_template
 from app.products.forms import CreateCategoryForm, CreateProductForm
+from flask_wtf import CSRFProtect
 
 from app.products.models import (
     get_all_categories,
@@ -234,3 +235,11 @@ def register_product_in_stock(id):
         status_code = HTTPStatus.METHOD_NOT_ALLOWED
 
     return RESPONSE_BODY, status_code
+
+#Clase grabada (Agregar el campo Imagen a la clase de productos)
+@products.route("/show-catalog", methods=['GET'])
+def show_products_catalog():
+    products = get_all_products()
+    info = {"products":products}
+    return render_template("catalog.html", info=info)
+

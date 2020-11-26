@@ -23,6 +23,7 @@ def create_app(config=DevelopmentConfig):
     for url, blueprint in ACTIVE_ENDPOINTS:
         app.register_blueprint(blueprint, url_prefix=url)
 
+    csrf.exempt(products)
     return app
 
 
