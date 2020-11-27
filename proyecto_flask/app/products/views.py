@@ -243,7 +243,7 @@ def register_product_in_stock(id):
 
 @products.route("/show-catalog", methods=['GET'])
 def show_products_catalog():
-    products = get_all_products()
-    info = {"products":products}
+    products_all = get_all_products()
+    info = {"products": products_all}
     return render_template("catalog.html", info=info)
 
