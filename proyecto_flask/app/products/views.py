@@ -115,7 +115,7 @@ def create_product_form_old():
             refundable = True
         else:
             refundable = False
-        product = create_new_product(request.form["name"], request.form["price"], request.form["weight"],
+        product = create_new_product(request.form["name"], request.form["image"], request.form["price"], request.form["weight"],
                                      request.form["description"], refundable, request.form["category_id"])
         RESPONSE_BODY["message"] = "Product {} created".format(request.form["name"])
         RESPONSE_BODY["data"] = product
@@ -127,7 +127,7 @@ def create_product_form_old():
 def create_product_form():
     form_product = CreateProductForm()
     if request.method == 'POST' and form_product.validate():
-        create_new_product(name=form_product.name.data, price=form_product.price.data, weight=form_product.weight.data,
+        create_new_product(name=form_product.name.data, image=form_product.image.data, price=form_product.price.data, weight=form_product.weight.data,
                            description=form_product.description.data, refundable=form_product.refundable.data, category_id=form_product.category_id.data)
 
     return render_template('create-product-form.html', form=form_product)
@@ -218,25 +218,29 @@ def register_product_in_stock(id):
 
     # TODO Complete this view to update stock for product when a register for
     # this products exists. If not create the new register in DB
+    product = get_product_by_id(id)
+    if product:
+        if request.method == "PUT":
+            data = request.json
+            RESPONSE_BODY["message"] = "Stock for this product were updated successfully!"
+            RESPONSE_BODY["data"] = update_product_stock(id, data["quantity"])
+            status_code = HTTPStatus.OK
 
-    if request.method == "PUT":
-        data = request.json
-        RESPONSE_BODY["message"] = "Stock for this product were updated successfully!"
-        RESPONSE_BODY["data"] = update_product_stock(id, data["quantity"])
-        status_code = HTTPStatus.OK
-
-    elif request.method == "POST":
-        data = request.json
-        RESPONSE_BODY["message"] = "Stock for this product were created successfully!"
-        RESPONSE_BODY["data"] = create_stock_by_product(id, data["quantity"])
-        status_code = HTTPStatus.CREATED
+        elif request.method == "POST":
+            data = request.json
+            RESPONSE_BODY["message"] = "Stock for this product were created successfully!"
+            RESPONSE_BODY["data"] = create_stock_by_product(id, data["quantity"])
+            status_code = HTTPStatus.CREATED
+        else:
+            RESPONSE_BODY["message"] = "Method not Allowed"
+            status_code = HTTPStatus.METHOD_NOT_ALLOWED
     else:
-        RESPONSE_BODY["message"] = "Method not Allowed"
-        status_code = HTTPStatus.METHOD_NOT_ALLOWED
+        RESPONSE_BODY["message"] = "The product doesn't exist"
+        status_code = HTTPStatus.NOT_FOUND
 
     return RESPONSE_BODY, status_code
 
-#Clase grabada (Agregar el campo Imagen a la clase de productos)
+
 @products.route("/show-catalog", methods=['GET'])
 def show_products_catalog():
     products = get_all_products()
