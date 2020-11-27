@@ -10,7 +10,7 @@ class Product(db.Model):
 
     """
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), nullable=False)
+    name = db.Column(db.String(100), nullable=False)
     image = db.Column(db.String(500), default="https://bit.ly/3loPYXP")
     price = db.Column(db.Integer, nullable=False)
     weight = db.Column(db.Integer, default=1)
@@ -75,11 +75,12 @@ def create_new_category(name):
     return None
 
 
-def create_new_product(name, price, weight, description, refundable, category_id):
+def create_new_product(name, image, price, weight, description, refundable, category_id):
+
     category = Category.query.filter_by(id=category_id).first()
 
     if category != []:
-        product = Product(name=name, price=price, weight=weight, description=description,
+        product = Product(name=name, image=image, price=price, weight=weight, description=description,
                           refundable=refundable, category_id=category_id)
         db.session.add(product)
         if db.session.commit():
