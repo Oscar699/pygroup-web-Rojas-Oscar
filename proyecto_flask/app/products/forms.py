@@ -9,6 +9,7 @@ class CreateCategoryForm(FlaskForm):
 
 class CreateProductForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired(), Length(max=50, message="The name is to long")])
+    image = StringField('Image URL', validators=[DataRequired()])
     price = IntegerField('Price', validators=[DataRequired()])
     weight = IntegerField('Weight', validators=[DataRequired()])
     description = StringField('Description', validators=[DataRequired(), Length(max=500, message="The description is to long")])
