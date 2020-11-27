@@ -7,12 +7,13 @@
 <body>
     <form method="POST" action="/products/add-product-form">
         {{ form.csrf_token }}
-        {{ form.name.label }} {{ form.name(size=20) }}
+        {{ form.name.label }} {{ form.name(size=30) }}
         <ul>
         {% for errors in form.name.errors %}
             <li style="color: red;">{{ error }}</li>
         {% endfor %}
         </ul>
+        {{ form.image.label }} {{ form.image(size=50) }}<br>
         {{ form.price.label }} {{ form.price(size=20) }}<br>
         {{ form.weight.label }} {{ form.weight(size=20) }}<br>
         {{ form.description.label }} {{ form.description(size=50) }}
