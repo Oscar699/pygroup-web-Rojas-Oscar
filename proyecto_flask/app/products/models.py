@@ -127,8 +127,9 @@ def get_stock_by_product(id):
 
 def update_product_stock(id, new_quantity):
     product_stock = Stock.query.filter_by(id=id).first()
-    product_stock.quantity += new_quantity
-    db.session.commit()
+    if product_stock != None:
+        product_stock.quantity += new_quantity
+        db.session.commit()
     stock_schema = StockSchema()
     s = stock_schema.dump(product_stock)
     return s
