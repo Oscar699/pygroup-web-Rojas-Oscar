@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Products Catalog</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/catalogStyle.css') }}">
+</head>
+<body>
+    <h1>Products Catalog (Pygroup)</h1>
+
+    <div class="products_container">
+        {% for row in info.products|batch(4) %}
+            <div class="row">
+                {% for product in row %}
+                    <div class="column">
+                        <div class="title">Name: {{ product.name }}</div>
+                        <div class="image"><img src="{{ product.image }}" alt="Product Image"> </div>
+                        <div class="price">Price: ${{ product.price }}</div>
+                        <div class="description">
+                            Description: {{ product.description }}
+                        </div>
+                        <div class="refundable">
+                            Refundable: {% if product.refundable == True %} Yes {% else %} No {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+
+</body>
+</html>

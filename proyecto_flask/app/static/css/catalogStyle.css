@@ -1,0 +1,16 @@
+.products_container{
+    margin-left: 150px;
+    margin-right: 150px;
+}
+img{
+    width: 150px;
+    height: 150px;
+}
+.row{
+    display: flex;
+    flex-direction: row;
+}
+.column{
+    width: 300px;
+    padding: 20px;
+}
