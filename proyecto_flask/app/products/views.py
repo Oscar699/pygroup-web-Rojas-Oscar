@@ -38,9 +38,9 @@ def resp(name):
                      400 The name is "pygroup"
     """
     if name != 'pygroup':
-        return Response('Felicitaciones! Trabajo exitoso {}'.format(name), status=200)
+        return Response('Felicitaciones! Trabajo exitoso {}'.format(name), status= HTTPStatus.OK)
     elif name == 'pygroup':
-        return Response('ERROR! No se puede usar el nombre pygroup', status=400)
+        return Response('ERROR! No se puede usar el nombre pygroup', status=HTTPStatus.BAD_REQUEST)
 
     """ 
     método render_template: La operación que convierte una plantilla en una página HTML completa se llama renderizado. 
@@ -220,20 +220,29 @@ def register_product_in_stock(id):
     # this products exists. If not create the new register in DB
     product = get_product_by_id(id)
     if product:
+
         if request.method == "PUT":
             data = request.json
-            RESPONSE_BODY["message"] = "Stock for this product were updated successfully!"
-            RESPONSE_BODY["data"] = update_product_stock(id, data["quantity"])
-            status_code = HTTPStatus.OK
+            stock_result = update_product_stock(id, data["quantity"])
+
+            if stock_result:
+                RESPONSE_BODY["message"] = "Stock for this product were updated successfully!"
+                RESPONSE_BODY["data"] = stock_result
+                status_code = HTTPStatus.OK
+            else:
+                RESPONSE_BODY["message"] = "Stock for this product doesn't exist, create one first."
+                status_code = HTTPStatus.NOT_FOUND
 
         elif request.method == "POST":
             data = request.json
             RESPONSE_BODY["message"] = "Stock for this product were created successfully!"
             RESPONSE_BODY["data"] = create_stock_by_product(id, data["quantity"])
             status_code = HTTPStatus.CREATED
+
         else:
             RESPONSE_BODY["message"] = "Method not Allowed"
             status_code = HTTPStatus.METHOD_NOT_ALLOWED
+
     else:
         RESPONSE_BODY["message"] = "The product doesn't exist"
         status_code = HTTPStatus.NOT_FOUND
