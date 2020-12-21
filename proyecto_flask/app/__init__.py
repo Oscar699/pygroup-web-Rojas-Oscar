@@ -37,7 +37,8 @@ def create_app(config=DevelopmentConfig):
 
     @login_manager.user_loader
     def load_user(user_id):
-        return User.query.filter(user_id)
+        return User.query.get(int(user_id))
+        #return User.query.filter(user_id)
 
     csrf.exempt(products)
     csrf.exempt(auth)
