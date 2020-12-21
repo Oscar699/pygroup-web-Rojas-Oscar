@@ -23,7 +23,7 @@ def login():
             return redirect(url_for("auth.login"))
 
         login_user(user, remember=remember_me)
-        return redirect(url_for("products.show_products_catalog"))
+        return redirect(url_for("products.create_category_form"))
 
     return render_template("login.html")
 
