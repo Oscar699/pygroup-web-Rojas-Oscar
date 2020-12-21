@@ -19,7 +19,7 @@ from app.products.models import (
 
 
 products = Blueprint("products", __name__, url_prefix="/products")
-test = Blueprint('test', __name__, url_prefix='/Homework2flask')
+homework = Blueprint('homework', __name__, url_prefix='/Homework2flask')
 
 EMPTY_SHELVE_TEXT = "Empty shelve!"
 PRODUCTS_TITLE = "<h1> Products </h1>"
@@ -27,7 +27,7 @@ DUMMY_TEXT = "Dummy method to show how Response works"
 RESPONSE_BODY = {"message": "", "data": [], "errors": [], "metadata": []}
 
 
-@test.route('/<string:name>', methods=['GET'])
+@homework.route('/<string:name>', methods=['GET'])
 def resp(name):
     """Description
     Show a message on the page according to the name indicated
