@@ -51,10 +51,6 @@ def test_client(app):
 @pytest.fixture
 def form_category(app):
     with app.app_context():
+        errors_count = 0
         form_category = CreateCategoryForm()
-        if request.method == 'POST' and form_product.validate():
-            create_new_product(name=form_product.name.data, image=form_product.image.data,
-                               price=form_product.price.data, weight=form_product.weight.data,
-                               description=form_product.description.data, refundable=form_product.refundable.data,
-                               category_id=form_product.category_id.data)
-            return ""
+        return form_category
