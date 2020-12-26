@@ -4,7 +4,7 @@ from wtforms.validators import DataRequired, Length, InputRequired
 
 
 class CreateCategoryForm(FlaskForm):
-    name = StringField('Name', validators=[DataRequired(), Length(max=50, message="Invalid data")])
+    name = StringField('Name', validators=[DataRequired(message="Invalid data"), Length(max=20, message="Invalid data")])
 
 
 class CreateProductForm(FlaskForm):
