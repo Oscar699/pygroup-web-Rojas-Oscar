@@ -17,3 +17,7 @@ class DevelopmentConfig(Config):
 
 class TestingConfig(Config):
     TESTING = True
+    SQLALCHEMY_DATABASE_URI = "sqlite:///test_db.sqlite3"
+    SQLALCHEMY_TRACK_MODIFICATION = False
+    DB_USERNAME = 'tests'
+    DB_PASSWORD = 'tests-pass'

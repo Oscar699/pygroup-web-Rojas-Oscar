@@ -1,20 +1,32 @@
-from flask import Flask
 
-from app.db import db, ma
-from conf.config import DevelopmentConfig
-from app.products.views import products, test
+from flask import Flask
 from flask_wtf import CSRFProtect
 
-ACTIVE_ENDPOINTS = [('/products', products), ('/Homework2flask', test)]
+from app.auth.models import User
+from app.auth.views import auth
+from app.db import db, ma
+from conf.config import DevelopmentConfig
+from app.products.views import products, homework
+from flask_migrate import Migrate
+from flask_login import LoginManager
+
+ACTIVE_ENDPOINTS = [('/products', products), ('/Homework2flask', homework), ('', auth)]
 
 
 def create_app(config=DevelopmentConfig):
     app = Flask(__name__)
+    migrate = Migrate()
     csrf = CSRFProtect(app)
+    login_manager = LoginManager()
+    login_manager.login_view = "auth.login"
+
     app.config.from_object(config)
+
     db.init_app(app)
     ma.init_app(app)
     csrf.init_app(app)
+    migrate.init_app(app, db=db)
+    login_manager.init_app(app)
 
     with app.app_context():
         db.create_all()
@@ -23,7 +35,13 @@ def create_app(config=DevelopmentConfig):
     for url, blueprint in ACTIVE_ENDPOINTS:
         app.register_blueprint(blueprint, url_prefix=url)
 
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
+        #return User.query.filter(user_id)
+
     csrf.exempt(products)
+    csrf.exempt(auth)
     return app
 
 

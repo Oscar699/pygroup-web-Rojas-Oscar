@@ -1,8 +1,10 @@
 import sys
 from http import HTTPStatus
-from flask import Blueprint, Response, request, render_template
+from flask import Blueprint, Response, request, render_template, session, flash, url_for, redirect
 from app.products.forms import CreateCategoryForm, CreateProductForm
+from functools import wraps
 from flask_wtf import CSRFProtect
+from flask_login import login_required
 
 from app.products.models import (
     get_all_categories,
@@ -19,7 +21,7 @@ from app.products.models import (
 
 
 products = Blueprint("products", __name__, url_prefix="/products")
-test = Blueprint('test', __name__, url_prefix='/Homework2flask')
+homework = Blueprint('homework', __name__, url_prefix='/Homework2flask')
 
 EMPTY_SHELVE_TEXT = "Empty shelve!"
 PRODUCTS_TITLE = "<h1> Products </h1>"
@@ -27,7 +29,19 @@ DUMMY_TEXT = "Dummy method to show how Response works"
 RESPONSE_BODY = {"message": "", "data": [], "errors": [], "metadata": []}
 
 
-@test.route('/<string:name>', methods=['GET'])
+def login_required(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'logged_in' in session:
+            return f(*args, **kwargs)
+        else:
+            flash("You need to login first")
+            return redirect(url_for('auth.login'))
+
+    return wrap
+
+
+@homework.route('/<string:name>', methods=['GET'])
 def resp(name):
     """Description
     Show a message on the page according to the name indicated
@@ -55,7 +69,7 @@ def resp(name):
 
 @products.route("/dummy-product", methods=["GET", "POST"])
 def dummy_product():
-    """This method test the request types. If is GET Type it will
+    """This method tests the request types. If is GET Type it will
     render the text Products in h1 label with code 500.
     If is POST Type it will return Empty shelve! with status code 403
     """
@@ -74,6 +88,7 @@ def dummy_product_two():
 
 
 @products.route("/categories")
+@login_required
 def get_categories():
     """
         Verificar que si get_all_categories es [] 400, message = "No hay nada"
@@ -109,6 +124,7 @@ def create_product():
 
 
 @products.route("/add-product-form-old", methods=["GET", "POST"])
+@login_required
 def create_product_form_old():
     if request.method == 'POST':
         if request.form["refundable"] == "True":
@@ -124,6 +140,7 @@ def create_product_form_old():
 
 
 @products.route("/add-product-form", methods=["GET", "POST"])
+@login_required
 def create_product_form():
     form_product = CreateProductForm()
     if request.method == 'POST' and form_product.validate():
@@ -134,6 +151,7 @@ def create_product_form():
 
 
 @products.route("/add-category-form", methods=["GET", "POST"])
+@login_required
 def create_category_form():
     form_category = CreateCategoryForm()
     if request.method == 'POST' and form_category.validate():
@@ -143,6 +161,7 @@ def create_category_form():
 
 
 @products.route("/add-category-form-old", methods=["GET","POST"])
+@login_required
 def create_category_form_old():
     if request.method == 'POST':
         category = create_new_category(request.form["name"])
@@ -176,6 +195,7 @@ def delete_product(id):
     RESPONSE_BODY["message"] = "Product deleted"
 
     return RESPONSE_BODY, HTTPStatus.OK
+
 
 @products.route("/")
 def get_products():
