@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/homeStyle.css') }}">
+{% endblock %}
+{% block tittle %}Home{% endblock %}
+{% block content %}
+    <div class="ui center aligned segment">
+        <div class="ui icon button" id="left-arrow-btn"><i class="arrow left icon"></i></div>
+        <div class="ui shape">
+            <div class="sides">
+                <div class="active side" id="#first-image">
+                    <img src="https://www.nvidia.com/content/dam/en-zz/Solutions/GeForce/gaming-pc/coolpc-minecraft1-rtx-es.png" alt="">
+                </div>
+                <div class="side" id="#second-image">
+                    <img src="https://topesdegama.com/app/uploads-topesdegama.com/2020/08/pc-gaming-hp-omen.jpg">
+                </div>
+            </div>
+        </div>
+        <div class="ui icon button" id="right-arrow-btn"><i class="arrow right icon"></i></div>
+        <h1 class="header">Backend!!!!</h1>
+    </div>
+{% endblock %}
+{% block script %}
+    {{ super() }}
+    $('.shape').shape();
+    $('#left-arrow-btn').click(function () {
+            $('.shape').shape('flip left');
+    });
+    $('#right-arrow-btn').click(function () {
+                $('.shape').shape('flip right');
+    });
+
+    $('#left-arrow-btn').hover(function(){
+        $('.arrow.left.icon').css({
+            "transform": "scale(1.5)"
+        });
+    });
+{% endblock %}

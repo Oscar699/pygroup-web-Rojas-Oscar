@@ -1,0 +1,22 @@
+.arrow.left.icon{
+    transition: transform 1s;
+}
+#right-arrow-btn{
+    margin-left: 80px;
+    margin-top: 250px;
+}
+#left-arrow-btn{
+    margin-right: 80px;
+    margin-top: 250px;
+}
+
+.ui.shape{
+    margin-top: 50px;
+    duration: 700ms;
+    width: 400px;
+    height: 400px;
+}
+img{
+    width: 400px;
+    height: 400px;
+}

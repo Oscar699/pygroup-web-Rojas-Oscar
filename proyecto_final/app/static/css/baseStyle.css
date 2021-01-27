@@ -1,0 +1,31 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+#header{
+    background-color:#304A98;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+#sidebar-menu{
+    background-color: #121B35;
+}
+#menu{
+    width: 100%;
+}
+#logTittle{
+    margin-left: 45px;
+    font-weight: bold;
+}
+#search-cont{
+    width: 500px;
+}
+#sidebar-item{
+    font-size: 12pt;
+}
+#footer-segment{
+    background-color:#304A98;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
