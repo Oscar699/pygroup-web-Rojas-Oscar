@@ -61,9 +61,27 @@
                         <i class="search link icon"></i>
                       </div>
                     </div>
-                    <a class="item" id="acces-btn">
-                        <i class="icon user"></i> Acceder
-                    </a>
+                    <div class="item">
+                        <button class="ui button" id="acces-btn">
+                            <i class="icon user"></i>
+                            {% if current_user.is_authenticated %}
+                                {{ current_user.login_name }}
+                            {% else %}
+                               Acceder
+                            {% endif %}
+                        </button>
+                        <div class="ui inverted popup">
+                            <div class="ui inverted middle aligned selection list">
+                                {% if current_user.is_authenticated %}
+                                    <a href="{{ url_for('userBp.login')}}" class="item" >Cuenta</a>
+                                    <a href="{{ url_for('userBp.logout')}}" class="item">Cerrar Sesion</a>
+                                {% else %}
+                                    <a href="{{ url_for('userBp.login')}}" class="item" >Iniciar Sesion</a>
+                                    <a href="{{ url_for('userBp.signup')}}" class="item">Registrarse</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
                     <div class="item">
                         <div class="ui animated button">
                           <div class="visible content">
@@ -73,6 +91,21 @@
                             Pagar
                           </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui modal">
+                <div class="ui attached centered aligned segment">
+                    <h1 class="ui centered aligned red header">Función no disponible</h1>
+                    <p class="infoModal">Debes iniciar sesion para poder realizar una compra</p>
+                </div>
+                <div class="ui bottom attached right aligned segment">
+                    <div class="ui buttons">
+                      <button class="ui button" id="boton-Cancelar">Cancelar</button>
+                      <div class="or" data-text="o"></div>
+                      <form action="{{ url_for('userBp.login')}}">
+                          <button class="ui positive button">Iniciar Sesion</button>
+                      </form>
                     </div>
                 </div>
             </div>
@@ -92,6 +125,16 @@
         $('#products-sidebar-activator').click(function () {
             $('#sidebar-menu').sidebar('toggle');
         })
+        $('#acces-btn')
+          .popup({
+            popup : $('.popup'),
+            on    : 'click'
+          })
+        ;
+        $('.modal')
+          .modal('attach events', '.animated.button', 'show')
+          .modal('attach events', '#boton-Cancelar', 'hide')
+        ;
     {% endblock %}
     </script>
 </body>
