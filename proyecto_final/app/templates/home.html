@@ -6,7 +6,9 @@
 {% block tittle %}Home{% endblock %}
 {% block content %}
     <div class="ui center aligned segment">
-        <div class="ui icon button" id="left-arrow-btn"><i class="arrow left icon"></i></div>
+        <div class="ui icon button" id="left-arrow-btn">
+            <i class="arrow left icon"></i>
+        </div>
         <div class="ui shape">
             <div class="sides">
                 <div class="active side" id="#first-image">
@@ -23,17 +25,13 @@
 {% endblock %}
 {% block script %}
     {{ super() }}
-    $('.shape').shape();
-    $('#left-arrow-btn').click(function () {
+    $('.shape').shape()
+        $('#left-arrow-btn').click(function () {
             $('.shape').shape('flip left');
-    });
-    $('#right-arrow-btn').click(function () {
-                $('.shape').shape('flip right');
-    });
-
-    $('#left-arrow-btn').hover(function(){
-        $('.arrow.left.icon').css({
-            "transform": "scale(1.5)"
         });
-    });
+        $('#right-arrow-btn').click(function () {
+                    $('.shape').shape('flip right');
+        });
+    ;
+
 {% endblock %}
