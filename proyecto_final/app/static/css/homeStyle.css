@@ -1,6 +1,4 @@
-.arrow.left.icon{
-    transition: transform 1s;
-}
+
 #right-arrow-btn{
     margin-left: 80px;
     margin-top: 250px;
@@ -9,7 +7,12 @@
     margin-right: 80px;
     margin-top: 250px;
 }
-
+.arrow.left.icon{
+    transition: transform 1s;
+}
+#left-arrow-btn:hover .arrow.left.icon{
+    transform: scale(1.5, 1.5);
+}
 .ui.shape{
     margin-top: 50px;
     duration: 700ms;
@@ -20,3 +23,4 @@ img{
     width: 400px;
     height: 400px;
 }
+
