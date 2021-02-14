@@ -56,7 +56,7 @@ class Stock(db.Model):
 class StockSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Stock
-        fields = ["id", "product_id", "product_name","quantity"]
+        fields = ["id", "product_id","quantity"]
 
 
 # Funcion que obtiene todos los productos
@@ -86,17 +86,19 @@ def get_stock_by_product(id):
 
 
 # Crea un producto y lo sube a la bd
-def create_new_product(name, image, price, weight, description, refundable, category_id):
-
+def create_new_product(name, image, price, description, refundable, category_id):
     category = Category.query.filter_by(id=category_id).first()
 
     if category:
-        product = Product(name=name, image=image, price=price, weight=weight, description=description,
+        product = Product(name=name, image=image, price=price, description=description,
                           refundable=refundable, category_id=category_id)
         db.session.add(product)
         if db.session.commit():
-            return product
-    return None
+            return "Producto creado exitosamente"
+        else:
+            return "Fallo en la base de datos"
+    else:
+        return "La categoria no existe"
 
 
 # Crea una categoria y la sube a la bd
@@ -105,9 +107,9 @@ def create_new_category(name):
     db.session.add(category)
 
     if db.session.commit():
-        return category
-
-    return None
+        return "Categoria creada exitosamente"
+    else:
+        return "Fallo en la base de datos"
 
 
 # Crea stock para un producto por su id
