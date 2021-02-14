@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/signup.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+</head>
+<body>
+    <div class="ui middle aligned center aligned grid">
+        <div class="column">
+            <h2 class="ui teal image header">
+                <i class="clipboard list icon"></i>
+                <div class="content">
+                    Formulario de Registro
+                </div>
+            </h2>
+            <form action="{{ url_for('userBp.signup')}}" method="POST" class="ui equal width large form">
+                <div class="ui raised segments">
+                    <h3 class="ui top attached left aligned teal header">Datos personales</h3>
+                    <div class="ui attached segment">
+                        <div class="fields">
+                            <div class="field">
+                                <h4 class="ui left aligned header">
+                                    {{ form.first_name.label }}
+                                </h4>
+                                    {{ form.first_name(placeholder="Nombre") }}
+                            </div>
+                            <div class="field">
+                                <h4 class="ui left aligned header">
+                                    {{ form.last_name.label }}
+                                </h4>
+                                    {{ form.last_name(placeholder="Apellido") }}
+                            </div>
+                        </div>
+                        <div class="fields">
+                            <div class="field">
+                                <h4 class="ui left aligned header">
+                                    {{ form.email.label }}
+                                </h4>
+                                    {{ form.email(placeholder="example@gmail.com") }}
+                            </div>
+                            <div class="field">
+                                <h4 class="ui left aligned header">
+                                    {{ form.address.label }}
+                                </h4>
+                                    {{ form.address(placeholder="Dirección de residencia") }}
+                            </div>
+                            <div class="field">
+                                <h4 class="ui left aligned header">
+                                    {{ form.phone_number.label }}
+                                </h4>
+                                    {{ form.phone_number(placeholder="Numeró movil") }}
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="ui mid attached left aligned teal header">Datos de cuenta</h3>
+                    <div class="ui attached segment">
+                        <div class="fields">
+                            <div class="field">
+                                <h4 class="ui left aligned header">
+                                    {{ form.login_name.label }}
+                                </h4>
+                                    {{ form.login_name(placeholder="example@gmail.com") }}
+                            </div>
+                            <div class="field">
+                                <h4 class="ui left aligned header">
+                                    {{ form.password.label }}
+                                </h4>
+                                    {{ form.password(placeholder="Contraseña") }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui bottom attached segment ">
+                        <button class="ui teal button">Registrarse</button>
+                    </div>
+                </div>
+            </form>
+        <div class="ui message">
+          ¿Ya tienes cuenta? <a href="{{ url_for('userBp.login') }}">Iniciar Sesion</a>
+        </div>
+        </div>
+    </div>
+</body>
+</html>
