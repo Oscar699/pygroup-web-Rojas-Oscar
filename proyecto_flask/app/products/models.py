@@ -1,7 +1,4 @@
 from datetime import datetime
-
-from flask import jsonify
-
 from app.db import db, ma
 from app.products.exceptions import ProductoNotFoundError
 
@@ -80,7 +77,7 @@ def create_new_product(name, image, price, weight, description, refundable, cate
 
     category = Category.query.filter_by(id=category_id).first()
 
-    if category != []:
+    if category:
         product = Product(name=name, image=image, price=price, weight=weight, description=description,
                           refundable=refundable, category_id=category_id)
         db.session.add(product)
