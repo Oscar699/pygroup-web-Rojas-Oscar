@@ -1,26 +1,15 @@
-
-#right-arrow-btn{
-    margin-left: 80px;
-    margin-top: 250px;
+.pusher{
+    height: 100%;
 }
-#left-arrow-btn{
-    margin-right: 80px;
-    margin-top: 250px;
+.content{
+    height: 90%;
 }
-.arrow.left.icon{
-    transition: transform 1s;
+.center-container{
+    height: 90%;
 }
-#left-arrow-btn:hover .arrow.left.icon{
-    transform: scale(1.5, 1.5);
-}
-.ui.shape{
-    margin-top: 50px;
-    duration: 700ms;
-    width: 400px;
-    height: 400px;
-}
-img{
-    width: 400px;
-    height: 400px;
+.ui.header{
+    color: #65BAA9;
+    font-weight: bold;
+    font-size: 1rem;
 }
 

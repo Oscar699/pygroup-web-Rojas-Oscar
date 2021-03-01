@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+    <title>Metodos de Pago</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/addPayMethodStyle.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+</head>
+<body>
+    <div class="pageContainer">
+        <div class="button-back-container">
+            <button class="ui button" onclick="goToPanel();">
+                <i class="ui left arrow icon"></i>
+            </button>
+        </div>
+        <div class="ui middle aligned center aligned grid">
+            <div class="column">
+                <h1 class="ui top attached block header">
+                    Agregar un metodo de pago
+                 </h1>
+                <div class="ui bottom attached segment">
+                    <form action="{{ url_for('paymentMethods.create_payment_method') }}" class="ui form" method="post">
+                        {{ form.csrf_token }}
+                         <div class="field">
+                             <h4 class="ui header">
+                                {{ form.payment_code.label }}
+                            </h4>
+                                {{ form.payment_code(placeholder="Codigo para el metodo de pago") }}
+                         </div>
+                        <div class="field">
+                             <h4 class="ui header">
+                                {{ form.payment_description.label }}
+                            </h4>
+                                {{ form.payment_description(placeholder="Ej: Credito") }}
+                         </div>
+                        <div class="field">
+                             <button type="submit" class="ui button">Agregar</button>
+                         </div>
+                    </form>
+                    {% if message %}
+                        <div class="ui success message">
+                            <h3 class="ui header">{{ message }}</h3>
+                        </div>
+                     {% endif %}
+                </dvi>
+            </div>
+        </div>
+    </div>
+    <script>
+        function goToPanel(){
+            location.href="{{ url_for('adminBp.admin_panel') }}"
+        }
+    </script>
+</body>
+</html>

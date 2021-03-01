@@ -1,0 +1,337 @@
+{% extends "base.html" %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cuentaStyle.css') }}">
+{% endblock %}
+{% block tittle %}Cuenta{% endblock %}
+{% block content %}
+    <div class="ui container" id="menu-container">
+        <div class="ui grid">
+            <div class="five wide column">
+                <div class="separator">
+                    <div class="ui secondary large vertical pointing tabular menu">
+                        <a class="item active" data-tab="first">Administrar Datos</a>
+                        <a class="item" data-tab="second">Editar metodos de pago</a>
+                        <a class="item" data-tab="third">Mis Pagos</a>
+                        <a class="item" data-tab="four">Eliminar cuenta</a>
+                    </div>
+                </div>
+            </div>
+            <div class="ten wide column" id="tab-content-container">
+                <div class="ui tab active" data-tab="first">
+                    <h2 class="ui header" id="tab-tittle">Bienvenido {{ current_user.login_name}}</h2>
+                    <div class="ui grid">
+                        <div class="ten wide column" id="tab-form-container">
+                            {% with messages = get_flashed_messages() %}
+                                {% if messages %}
+                                <div class="ui yellow message">
+                                    {{ messages[0] }}
+                                </div>
+                                {% endif %}
+                            {% endwith %}
+                            <form action="{{ url_for('userBp.account_personal_data_update', option=1) }}" method="post" class="ui form" id="first_name_form">
+                                <div class="field">
+                                    {{ forms["form_first_name"].csrf_token }}
+                                    <h4 class="ui left aligned header">
+                                        {{ forms["form_first_name"].first_name.label }}
+                                    </h4>
+                                    <div class="ui grid">
+                                        <div class="fourteen wide column">
+                                            <p class="input-copy" id="first_name_old">{{ current_user.first_name}}</p>
+                                            <form action="" method="post">
+                                               {{ forms["form_first_name"].first_name(class="new-content") }}
+                                            </form>
+                                        </div>
+                                        <div class="two wide column">
+                                            <button class="ui icon button" id="first_name_edit_button" title="Editar" onclick="editFirstName();" type="button">
+                                                <i class="edit icon"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field-update-button-container" id="first_name-button-container">
+                                    <div class="field">
+                                        <button type="submit" class="ui positive button" onclick="sendFirstNameForm()">Guardar</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <form action="{{ url_for('userBp.account_personal_data_update', option=2) }}" method="post" class="ui form" id="last_name_form">
+                                <div class="field">
+                                    {{ forms["form_last_name"].csrf_token }}
+                                    <h4 class="ui left aligned header">
+                                        {{ forms["form_last_name"].last_name.label }}
+                                    </h4>
+                                    <div class="ui grid">
+                                        <div class="fourteen wide column">
+                                            <p class="input-copy" id="last_name_old">{{ current_user.last_name}}</p>
+                                            <form action="" method="post">
+                                               {{ forms["form_last_name"].last_name(class="new-content") }}
+                                            </form>
+                                        </div>
+                                        <div class="two wide column">
+                                            <button class="ui icon button" id="last_name_edit_button" title="Editar" onclick="editLastName();" type="button">
+                                                <i class="edit icon"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field-update-button-container" id="last_name-button-container">
+                                    <div class="field">
+                                        <button type="submit" class="ui positive button" onclick="sendLastNameForm();">Guardar</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <form action="{{ url_for('userBp.account_personal_data_update', option=3) }}" method="post" class="ui form" id="email_form">
+                                <div class="field">
+                                    {{ forms["form_email"].csrf_token }}
+                                    <h4 class="ui left aligned header">
+                                        {{ forms["form_email"].email.label }}
+                                    </h4>
+                                    <div class="ui grid">
+                                        <div class="fourteen wide column">
+                                            <p class="input-copy" id="email_old">{{ current_user.email}}</p>
+                                            <form action="" method="post">
+                                               {{ forms["form_email"].email(class="new-content") }}
+                                            </form>
+                                        </div>
+                                        <div class="two wide column">
+                                            <button class="ui icon button" id="email_edit_button" title="Editar" onclick="editEmail();" type="button">
+                                                <i class="edit icon"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field-update-button-container" id="email-button-container">
+                                    <div class="field">
+                                        <button type="submit" class="ui positive button" onclick="sendEmailForm();">Guardar</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <form action="{{ url_for('userBp.account_personal_data_update', option=4) }}" method="post" class="ui form" id="login_name_form">
+                                <div class="field">
+                                    {{ forms["form_login_name"].csrf_token }}
+                                    <h4 class="ui left aligned header">
+                                        {{ forms["form_login_name"].login_name.label }}
+                                    </h4>
+                                    <div class="ui grid">
+                                        <div class="fourteen wide column">
+                                            <p class="input-copy" id="login_name_old">{{ current_user.login_name}}</p>
+                                               {{ forms["form_login_name"].login_name(class="new-content") }}
+                                        </div>
+                                        <div class="two wide column">
+                                            <button class="ui icon button" id="login_name_edit_button" title="Editar" onclick="editLoginName();" type="button">
+                                                <i class="edit icon"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field-update-button-container" id="login-name-button-container">
+                                    <div class="field">
+                                        <button type="submit" class="ui positive button">Guardar</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <form action="{{ url_for('userBp.account_personal_data_update', option=5) }}" method="post" class="ui form" id="password_form">
+                                <div class="field">
+                                    {{ forms["form_password"].csrf_token }}
+                                    <h4 class="ui left aligned header">
+                                        {{ forms["form_password"].password.label }}
+                                    </h4>
+                                    <div class="ui grid">
+                                        <div class="fourteen wide column">
+                                               {{ forms["form_password"].password(class="new-content") }}
+                                        </div>
+                                        <div class="two wide column">
+                                            <button class="ui icon button" id="password_edit_button" title="Editar" onclick="editPassword();" type="button">
+                                                <i class="edit icon"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field-update-button-container" id="password-button-container">
+                                    <div class="field">
+                                        <button type="submit" class="ui positive button">Guardar</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <form action="{{ url_for('userBp.account_personal_data_update', option=6) }}" method="post" class="ui form" id="address_form">
+                                <div class="field">
+                                    {{ forms["form_address"].csrf_token }}
+                                    <h4 class="ui left aligned header">
+                                        {{ forms["form_address"].address.label }}
+                                    </h4>
+                                    <div class="ui grid">
+                                        <div class="fourteen wide column">
+                                            <p class="input-copy" id="address_old">{{ current_user.address }}</p>
+                                               {{ forms["form_address"].address(class="new-content") }}
+                                        </div>
+                                        <div class="two wide column">
+                                            <button class="ui icon button" id="adress_edit_button" title="Editar" onclick="editAddress();" type="button">
+                                                <i class="edit icon"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field-update-button-container" id="address-button-container">
+                                    <div class="field">
+                                        <button type="submit" class="ui positive button">Guardar</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <form action="{{ url_for('userBp.account_personal_data_update', option=7) }}" method="post" class="ui form" id="phone_number_form">
+                                <div class="field">
+                                    {{ forms["form_phone"].csrf_token }}
+                                    <h4 class="ui left aligned header">
+                                        {{ forms["form_phone"].phone_number.label }}
+                                    </h4>
+                                    <div class="ui grid">
+                                        <div class="fourteen wide column">
+                                            <p class="input-copy" id="phone_number_old">{{ current_user.phone_number }}</p>
+                                               {{ forms["form_phone"].phone_number(class="new-content") }}
+                                        </div>
+                                        <div class="two wide column">
+                                            <button class="ui icon button" id="phone_number_edit_button" title="Editar" onclick="editPhoneNumber();" type="button">
+                                                <i class="edit icon"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field-update-button-container" id="phone-number-button-container">
+                                    <div class="field">
+                                        <button type="submit" class="ui positive button">Guardar</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui tab " data-tab="second">
+                    <h2 class="ui header">Tus metodos de pago</h2>
+                        <table class="ui single line table">
+                            <thead>
+                                <th>Metodo de Pago</th>
+                                <th>N° Tarjeta</th>
+                                <th>Estado del metodo</th>
+                                <th>
+                                    <button class="ui icon button" title="Añadir" onclick="goToAddCustomerPayMethod();">
+                                        <i class="add icon"></i>
+                                    </button>
+                                </th>
+                            </thead>
+                            {% if pay %}
+                            <tbody>
+                                {% for method in pay %}
+                                    <tr>
+                                        <td>
+                                            {% for tipe in refer %}
+                                                {% if method.payment_method_code == tipe.payment_method_code %}
+                                                    {{ tipe.payment_method_description }}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </td>
+                                        <td> {{ method.credit_card_number[0:4] }}######## </td>
+                                        <td>
+                                            {{ method.payment_method_details }}
+                                        </td>
+                                        <td>
+                                            <form action="{{ url_for('paymentMethods.delete_customer_payment_method') }}" method="post">
+                                                <button class="ui icon button" type="submit"><i class="x icon"></i></button>
+                                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                                <input type="hidden" name="payment_id" id="payment_id" value="{{ method.id }}">
+                                            </form>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                            {% endif %}
+                        </table>
+                        {% if not pay %}
+                            <div class="ui warning message">
+                                <h3 class="ui header"> Aun no has agregado ninguna forma de pago </h3>
+                            </div>
+                        {% endif %}
+                </div>
+                <div class="ui tab" data-tab="third">
+                    <h2 class="ui header">Tus Pagos</h2>
+                    <table class="ui single line table">
+                        <thead>
+                            <th>N° de pago</th>
+                            <th>N° de factura</th>
+                            <th>Fecha</th>
+                            <th>Monto pagado</th>
+                        </thead>
+                        {% if payments %}
+                            <tbody>
+                                {% for payment in payments %}
+                                    <tr>
+                                        <td>
+                                            {{ payment.id }}
+                                        </td>
+                                        <td> {{ payment.invoice_number }} </td>
+                                        <td>
+                                            {{ payment.payment_date }}
+                                        </td>
+                                        <td> {{ payment.payment_amount }} </td>
+                                        <td>
+                                            <button class="ui icon button"><i class="x icon"></i></button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        {% endif %}
+                    </table>
+                    {% if not payments %}
+                        <div class="ui warning message">
+                            <h3 class="ui header"> Aun no has efectuado una compra </h3>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="ui tab " data-tab="four">
+                    <form action="{{ url_for('userBp.account_delete') }}" method="post" id="delete-account-form">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <div class="ui raised very padded text container red segment">
+                            <h2 class="ui header">Eliminar cuenta de usuario</h2>
+                            <p>Al eliminar la cuenta de usuario, todos los datos personales relacionados con esta seran eliminados</p>
+                            <div class="ui negative button">Eliminar mi cuenta</div>
+                        </div>
+                        <div class="ui mini modal">
+                            <div class="header">Elminar Cuenta</div>
+                            <div class="content">
+                                <p>Una vez eliminada, no hay marcha atras. ¿Desea continuar?</p>
+                            </div>
+                            <div class="actions">
+                                <div class="ui negative button"> No </div>
+                                <button class="ui positive button" id="show-result-modal" onclick="senOpt();"> Si </button>
+                            </div>
+                        </div>
+                        <input type="hidden" value="3" name="option">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    {{ super() }}
+
+    $('.menu .item')
+      .tab()
+    ;
+
+    $('.modal')
+        .modal('setting', 'closable', false)
+        .modal('attach events', '.negative.button', 'show')
+    ;
+
+    function goToAddCustomerPayMethod(){
+        location.href = "{{ url_for('paymentMethods.create_customer_pay') }}"
+    }
+
+    function goToDeleteCustomerPayMethod(){
+        location.href = "{{ url_for('paymentMethods.delete_customer_payment_method') }}"
+    }
+
+    function senOpt(){
+        document.getElementById('delete-account-form').submit();
+    }
+{% endblock %}

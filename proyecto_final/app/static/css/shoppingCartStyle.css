@@ -1,0 +1,30 @@
+.content{
+    height: 90%;
+}
+.pusher{
+    height: 100%;
+}
+.shopping-container{
+    padding-top: 20px;
+    height: 90%;
+}
+.grid{
+    height: 90%;
+}
+.no-products-notice-container{
+    margin-top: 100px;
+}
+.icon-container{
+    padding-top: 15px;
+}
+tr{
+    height: 50px;
+}
+.center-container{
+    width: 100%;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+}

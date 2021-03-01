@@ -1,0 +1,50 @@
+#menu-container{
+    margin-top: 50px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #80808066;
+}
+#tab-content-container{
+    padding-top: 30px;
+    min-height: 890px;
+}
+h2{
+    margin-top:5px;
+    margin-bottom: 25px;
+}
+.separator{
+    width: 252px;
+    height: 100%;
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-right-color: #80808066;
+}
+.buttons-container{
+    margin-top: 10px;
+    width: 100%;
+}
+.field-update-button-container{
+    padding-top: 10px;
+    display: none;
+}
+.input-copy{
+    border-style: solid;
+    border-width: 1px;
+    border-color: #e8e8e9;
+    border-radius: 3px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 14px;
+}
+.new-content{
+    display: none;
+}
+#input-button-par-container{
+    border-style: none;
+}
+#footer-segment{
+    position: relative;
+}
+.content{
+    margin-bottom: 15px;
+}

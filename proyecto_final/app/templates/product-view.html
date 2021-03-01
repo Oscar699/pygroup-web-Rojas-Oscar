@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/productViewStyle.css') }}">
+{% endblock %}
+{% block tittle %}{{ product.name }}{% endblock %}
+
+{% block content %}
+    <div class="product-container">
+        <div class="ui center aligned grid">
+            <div class="four wide column">
+                <div class="image-container">
+                    <img src="{{ product.image }}" alt="{{ product.name }}" class="product-image">
+                </div>
+            </div>
+            <div class="one wide column"></div>
+            <div class="five wide column">
+                <div class="product-name">
+                    <h1 class="ui header">{{ product.name }}</h1>
+                </div>
+                <div class="product-description">
+                    <p class="description-paragraph"> {{ product.description}}</p>
+                </div>
+                <div class="product-price">
+                    <div class="ui big tag label">
+                            $ {{ product.price }}
+                    </div>
+                </div>
+                <div class="product-refundable">
+                    <p class="refundable-description"  {% if product.refundable == True %} style="color: green" {% else %} No style="color: red" {% endif %}>
+                        {% if product.refundable == True %} Reembolsable {% else %} No reembolsable {% endif %}
+                    </p>
+                </div>
+                <div class="product-buy-space">
+                    <form action="{{ url_for('order.add_order_item') }}" method="post" class="ui large form">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <input type="hidden" name="product_id" id="product_id" value="{{ product.id }}">
+                        <input type="hidden" name="price" id="price" value="{{ product.price }}">
+                        <div class="fields">
+                            <div class="inline field">
+                                <label for="quantity">Cantidad:</label>
+                                <input type="number" name="quantity" id="quantity">
+                            </div>
+                            <div class="field">
+                                <button class="ui button">Comprar</button>
+                            </div>
+                        </div>
+                    </form>
+                    {% if message %}
+                        <div class="ui warning message">
+                            <h3 class="ui header">{{ message }}</h3>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block script %}
+    {{ super() }}
+{% endblock %}
+

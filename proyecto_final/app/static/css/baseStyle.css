@@ -2,6 +2,9 @@
     margin: 0;
     padding: 0;
 }
+body{
+    height: 100%;
+}
 #header{
     background-color:#304A98;
     padding-right: 10px;
@@ -13,12 +16,27 @@
 #menu{
     width: 100%;
 }
-#logTittle{
-    margin-left: 45px;
-    font-weight: bold;
+.logo{
+    height: 49px;
+    width: 60px;
+    margin-top: 6px;
 }
-#search-cont{
-    width: 500px;
+.center-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.logo-link{
+    margin-left: 45px;
+    display: inline-flex;
+}
+#logTittle{
+    font-weight: bold;
+    color: #65BAA9;
+    margin-top: 10px;
+    font-size: 23pt;
+    margin-bottom: 20px;
 }
 #sidebar-item{
     font-size: 12pt;
@@ -32,5 +50,8 @@
 .infoModal{
     text-align: center;
     font-size: 13pt;
+}
+.content{
+    padding-top: 20px;
 }
 

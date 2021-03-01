@@ -4,10 +4,12 @@
     {% block head %}
     <meta charset="UTF-8">
     <title>{% block tittle %}{% endblock %}</title>
+    <link rel="icon" href="{{ url_for('static', filename='images/logo.ico') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/baseStyle.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+    <script src="{{ url_for('static', filename='js/PcStoreCode.js') }}"></script>
     {% endblock %}
 </head>
 <body>
@@ -16,7 +18,7 @@
             <div class="item">
                 <div class="ui blue header">PC Componentes</div>
                 <div class="menu">
-                    <a class="item" id="sidebar-item">
+                    <a class="item" id="sidebar-item" href="/store/category/1/">
                       Procesadores
                     </a>
                     <a class="item" id="sidebar-item">
@@ -53,13 +55,18 @@
                         <i class="sidebar icon"></i> Productos
                     </div>
                 </div>
-                <h2 class="ui item" id="logTittle">CompuTech Store</h2>
+                <div class="center-container">
+                    <div class="logo-container"></div>
+                    <a href="{{ url_for('store.home_page')}}" class="logo-link">
+                        <img class="logo" src="{{ url_for('static', filename='images/logo.png') }}" alt="CompuTech">
+                        <h2 id="logTittle">CompuTech Store</h2 class="ui item">
+                    </a>
+                </div>
                 <div class="right menu">
                     <div class="item">
-                      <div class="ui icon input">
-                        <input type="text" placeholder="Buscar..." id="search-cont">
-                        <i class="search link icon"></i>
-                      </div>
+                        <button class="ui button" onclick="goToShoppingCar()">
+                            <i class="shop icon"></i>
+                        </button>
                     </div>
                     <div class="item">
                         <button class="ui button" id="acces-btn">
@@ -71,25 +78,15 @@
                             {% endif %}
                         </button>
                         <div class="ui inverted popup">
-                            <div class="ui inverted middle aligned selection list">
+                            <div class="ui inverted middle aligned link list">
                                 {% if current_user.is_authenticated %}
-                                    <a href="{{ url_for('userBp.login')}}" class="item" >Cuenta</a>
+                                    <a href="{{ url_for('userBp.account')}}" class="item">Cuenta</a>
                                     <a href="{{ url_for('userBp.logout')}}" class="item">Cerrar Sesion</a>
                                 {% else %}
                                     <a href="{{ url_for('userBp.login')}}" class="item" >Iniciar Sesion</a>
                                     <a href="{{ url_for('userBp.signup')}}" class="item">Registrarse</a>
                                 {% endif %}
                             </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="ui animated button">
-                          <div class="visible content">
-                              <i class="shop icon"></i>
-                          </div>
-                          <div class="hidden content">
-                            Pagar
-                          </div>
                         </div>
                     </div>
                 </div>
@@ -110,7 +107,7 @@
                 </div>
             </div>
         </div>
-        <div id="content">
+        <div class="content">
             {% block content %}
             {% endblock %}
         </div>
@@ -135,6 +132,10 @@
           .modal('attach events', '.animated.button', 'show')
           .modal('attach events', '#boton-Cancelar', 'hide')
         ;
+
+        function goToShoppingCar(){
+            location.href = "{{ url_for('order.show_order') }}"
+        }
     {% endblock %}
     </script>
 </body>

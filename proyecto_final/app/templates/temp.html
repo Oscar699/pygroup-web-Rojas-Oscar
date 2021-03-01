@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form action="{{ url_for('adminBp.temp') }}" method="post">
+        <input type="password" name="pass" id="pass">
+        <button type="submit">send</button>
+    </form>
+    {% if passw %}
+        <h3>{{ passw }}</h3>
+    {% endif %}
+</body>
+</html>

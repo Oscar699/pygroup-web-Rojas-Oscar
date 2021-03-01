@@ -1,0 +1,22 @@
+.column{
+    max-width: 1400px;
+    padding: 20px;
+}
+.products_container{
+    margin-left: 150px;
+    margin-right: 150px;
+}
+.image-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    width: 320px;
+    height: 300px;
+    overflow: hidden;
+}
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+

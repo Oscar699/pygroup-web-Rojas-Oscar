@@ -142,7 +142,7 @@ def create_category_form():
     return render_template('create_category_form.html', form=form_category)
 
 
-@products.route("/add-category-form-old", methods=["GET","POST"])
+@products.route("/add-category-form-old", methods=["GET", "POST"])
 def create_category_form_old():
     if request.method == 'POST':
         category = create_new_category(request.form["name"])

@@ -1,0 +1,51 @@
+.product-container{
+    margin-top: 60px;
+}
+.image-container{
+    width: 400px;
+    height: 400px;
+    background: white;
+    overflow: hidden;
+
+}
+.image-container img{
+  width: 100%;
+  height: auto;
+}
+@supports(object-fit: cover){
+    .image-container img{
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+    }
+}
+.product-name{
+
+}
+label{
+    font-size: 12pt;
+}
+.product-description{
+    padding-top: 20px;
+}
+.description-paragraph{
+    font-size: 15pt;
+    text-align: justify;
+}
+.product-price{
+    margin-top: 30px;
+}
+.product-refundable{
+    height: 40px;
+    margin-top: 25px;
+    margin-bottom: 5px;
+}
+.refundable-description{
+    font-weight: bold;
+    font-size: 15pt;
+}
+.product-buy-space{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}

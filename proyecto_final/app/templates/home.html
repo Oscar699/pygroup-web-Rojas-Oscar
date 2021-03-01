@@ -5,33 +5,17 @@
 {% endblock %}
 {% block tittle %}Home{% endblock %}
 {% block content %}
-    <div class="ui center aligned segment">
-        <div class="ui icon button" id="left-arrow-btn">
-            <i class="arrow left icon"></i>
-        </div>
-        <div class="ui shape">
-            <div class="sides">
-                <div class="active side" id="#first-image">
-                    <img src="https://www.nvidia.com/content/dam/en-zz/Solutions/GeForce/gaming-pc/coolpc-minecraft1-rtx-es.png" alt="">
-                </div>
-                <div class="side" id="#second-image">
-                    <img src="https://topesdegama.com/app/uploads-topesdegama.com/2020/08/pc-gaming-hp-omen.jpg">
-                </div>
+    <div class="center-container">
+        <div class="welcome-container">
+            <div class="ui vertical masthead center aligned segment">
+                <h1 class="ui header">¡Bienvenido a CompuTech Store!</h1>
+                <h2>La tienda en donde encuentras toda la tecnologia que necesitas</h2>
+                <h3>Usa el botón "Productos" para empezar a navegar por la tienda </h3>
             </div>
         </div>
-        <div class="ui icon button" id="right-arrow-btn"><i class="arrow right icon"></i></div>
-        <h1 class="header">Backend!!!!</h1>
     </div>
 {% endblock %}
 {% block script %}
     {{ super() }}
-    $('.shape').shape()
-        $('#left-arrow-btn').click(function () {
-            $('.shape').shape('flip left');
-        });
-        $('#right-arrow-btn').click(function () {
-                    $('.shape').shape('flip right');
-        });
-    ;
 
 {% endblock %}
