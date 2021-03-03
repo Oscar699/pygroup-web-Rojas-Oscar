@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add product</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/addCostumerPayMethodStyle.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+</head>
+<body>
+    <div class="pageContainer">
+        <div class="button-back-container">
+            <button class="ui button" onclick="goToCuenta();">
+                <i class="ui left arrow icon"></i>
+            </button>
+        </div>
+        <div class="ui middle aligned center aligned grid">
+            <div class="column">
+                <h1 class="ui top attached block header">
+                    Agregar nuevo metodo de pago
+                </h1>
+                <div class="ui bottom attached segment">
+                     <form action="{{ url_for('paymentMethods.create_customer_pay') }}" class="ui equal width large form" method="post">
+                         {{ form.csrf_token }}
+                         <div class="field">
+                              <h4 class="ui header">
+                                  {{ form.credit_card_number.label }}
+                              </h4>
+                             {{ form.credit_card_number(placeholder="Numero de tarjeta de credito") }}
+                             {% if form.credit_card_number.errors %}
+                                {% for error in form.credit_card_number.errors %}
+                                    <div class="ui error message">
+                                        <h3 class="ui header"> {{ error }} </h3>
+                                    </div>
+                                {% endfor %}
+                             {% endif %}
+                         </div>
+                         <div class="field0">
+                             <h4 class="ui header">
+                                {{ form.payment_method_code.label }}
+                            </h4>
+                                {{ form.payment_method_code }}
+                         </div>
+                         <div class="field">
+                             <button type="submit" class="ui button">Agregar</button>
+                         </div>
+                    </form>
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            <div class="ui warning message">
+                                <h3 class="ui header">{{ messages[0] }}</h3>
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function goToCuenta(){
+            location.href="{{ url_for('userBp.account') }}"
+        }
+    </script>
+</body>
+</html>

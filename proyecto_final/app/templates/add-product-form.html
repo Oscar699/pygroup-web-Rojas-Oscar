@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add product</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/addProductStyle.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+</head>
+<body>
+    <div class="pageContainer">
+        <div class="button-back-container">
+            <button class="ui button" onclick="goToPanel();">
+                <i class="ui left arrow icon"></i>
+            </button>
+        </div>
+        <div class="ui middle aligned center aligned grid">
+            <div class="column">
+                <h1 class="ui top attached block header">
+                    Agregar nuevo producto
+                </h1>
+                <div class="ui bottom attached segment">
+                    <div class="ui grid">
+                        <div class="ten wide column">
+                            <form action="{{ url_for('store.create_product') }}" class="ui equal width large form" method="post">
+                                {{ form.csrf_token }}
+                                <div class="fields">
+                                    <div class="field">
+                                        <h4 class="ui header">
+                                            {{ form.name.label }}
+                                        </h4>
+                                            {{ form.name(placeholder="Nombre del producto") }}
+                                        {% for error in form.name.errors %}
+                                            <div class="ui error message">
+                                                <h3 class="ui header"> {{ error }} </h3>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="field">
+                                        <h4 class="ui header">
+                                            {{ form.image.label }}
+                                        </h4>
+                                            {{ form.image(placeholder="URL") }}
+                                        {% for error in form.image.errors %}
+                                            <div class="ui error message">
+                                                <h3 class="ui header"> {{ error }} </h3>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="fields">
+                                    <div class="field">
+                                        <h4 class="ui header">
+                                            {{ form.price.label }}
+                                        </h4>
+                                            {{ form.price(placeholder="$$$$", type="number") }}
+                                        {% for error in form.price.errors %}
+                                            <div class="ui error message">
+                                                <h3 class="ui header"> {{ error }} </h3>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="field">
+                                        <h4 class="ui header">
+                                            {{ form.description.label }}
+                                        </h4>
+                                            {{ form.description(placeholder="Breve descripcíon") }}
+                                        {% for error in form.description.errors %}
+                                            <div class="ui error message">
+                                                <h3 class="ui header"> {{ error }} </h3>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="fields">
+                                    <div class="field">
+                                        <h4 class="ui header">
+                                            {{ form.refundable.label }}
+                                        </h4>
+                                            {{ form.refundable() }}
+                                        {% for error in form.refundable.errors %}
+                                            <div class="ui error message">
+                                                <h3 class="ui header"> {{ error }} </h3>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="field">
+                                        <h4 class="ui header">
+                                            {{ form.category_id.label }}
+                                        </h4>
+                                            {{ form.category_id(placeholder="Id de la categoria del producto") }}
+                                        {% for error in form.category_id.errors %}
+                                            <div class="ui error message">
+                                                <h3 class="ui header"> {{ error }} </h3>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                {% if message %}
+                                    <div class="fields">
+                                        <div class="centered align field">
+                                            {{ message }}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                <div class="fields">
+                                    <div class="centered align field">
+                                        <button type="submit" class="ui button">Agregar</button>
+                                    </div>
+                                </div>
+                            </form>
+                            {% if message %}
+                                <div class="ui succes message">
+                                    <h3 class="ui header">{{ message }}</h3>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="six wide column">
+                            <table class="ui single line table">
+                                <thead>
+                                    <th>Categoria</th>
+                                    <th>Id de Cateogoria</th>
+                                </thead>
+                                <tbody>
+                                    {% if categories %}
+                                        {% for category in categories %}
+                                            <tr>
+                                                <td>{{ category.category_name }}</td>
+                                                <td>{{ category.id }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <tr>
+                                            <td>
+                                                <p class="text-message">Aun no hay categorias. Es necesario crear una.</p>
+
+                                            </td>
+                                            <td><a href="{ url_for('store.create_category') }"></a></td>
+                                        </tr>
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function goToPanel(){
+            location.href="{{ url_for('adminBp.admin_panel') }}"
+        }
+    </script>
+</body>
+</html>

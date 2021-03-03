@@ -1,8 +1,6 @@
 from datetime import datetime
-
-from flask import jsonify
-
 from app.db import db, ma
+from app.products.exceptions import ProductoNotFoundError
 
 
 class Product(db.Model):
@@ -79,7 +77,7 @@ def create_new_product(name, image, price, weight, description, refundable, cate
 
     category = Category.query.filter_by(id=category_id).first()
 
-    if category != []:
+    if category:
         product = Product(name=name, image=image, price=price, weight=weight, description=description,
                           refundable=refundable, category_id=category_id)
         db.session.add(product)
@@ -99,9 +97,12 @@ def get_all_products():
 
 def get_product_by_id(id):
     product_qs = Product.query.filter_by(id=id).first()
-    product_schema = ProductSchema()
-    p = product_schema.dump(product_qs)
-    return p
+    if product_qs:
+        product_schema = ProductSchema()
+        p = product_schema.dump(product_qs)
+        return p
+    else:
+        raise ProductoNotFoundError
 
 
 def delete_product_by_id(id):

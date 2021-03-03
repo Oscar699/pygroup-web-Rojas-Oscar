@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/productsCatalogStyle.css') }}">
+{% endblock %}
+{% block tittle %}{{ category.category_name }}{% endblock %}
+
+{% block content %}
+    <div class="catalog-container">
+        <div class="ui center aligned grid">
+            <div class="column">
+                <h1 class="ui top attached block header">
+                    {{ category.category_name }}
+                 </h1>
+                <div class="ui bottom attached segment">
+                    <div class="products-container">
+                        <div class="ui four cards">
+                        {% for product in products %}
+                            <a class="card" href="/store/product/view/{{ product.id }}/0">
+                                <div class="image" style="background-color: white;">
+                                    <div class="image-box">
+                                        <img src="{{ product.image }}" alt="{{ product.name }}" class="product-image">
+                                    </div>
+                                </div>
+                                <div class="content">
+                                    <div class="header">{{ product.name }}</div>
+                                </div>
+                                <div class="extra content">
+                                    <p class="product-price">
+                                        <i class="dollar sign icon"></i>
+                                        {{ product.price }}
+                                    </p>
+                                    <p class="product-refundable">
+                                        {% if product.refundable == True %} Reembolsable {% else %} No reembolsable {% endif %}
+                                    </p>
+                                </div>
+                            </a>
+                        {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    {{ super() }}
+{% endblock %}

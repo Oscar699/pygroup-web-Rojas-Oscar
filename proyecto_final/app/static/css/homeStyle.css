@@ -1,0 +1,15 @@
+.pusher{
+    height: 100%;
+}
+.content{
+    height: 90%;
+}
+.center-container{
+    height: 90%;
+}
+.ui.header{
+    color: #65BAA9;
+    font-weight: bold;
+    font-size: 1rem;
+}
+

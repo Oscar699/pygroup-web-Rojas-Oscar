@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/shoppingCartStyle.css') }}">
+{% endblock %}
+{% block tittle %}Shopping Cart{% endblock %}
+{% block content %}
+    <div class="shopping-container">
+        <div class="ui center aligned grid">
+            <div class=" twelve wide column">
+                {% if order_information %}
+                    <table class="ui single line table">
+                        <thead>
+                            <tr class="center aligned">
+                                <th>Producto</th>
+                                <th>Cantidad</th>
+                                <th>Precio</th>
+                                <th>IVA (19%)</th>
+                                <th>Subtotal</th>
+                                <th>Eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order_item, order_item_iva_price, order_subtotal_price, product_name in order_information.order_items|zip( order_information.order_items_iva_prices, order_information. order_subtotal_prices, order_information.product_names) %}
+                            <tr class="center aligned">
+                                <td>{{ product_name }}</td>
+                                <td>{{ order_item.order_item_quantity }}</td>
+                                <td>${{ order_item.order_item_price }}</td>
+                                <td>${{ order_item_iva_price }}</td>
+                                <td>${{ order_subtotal_price }}</td>
+                                <td>
+                                    <form action="{{ url_for('order.show_order') }}" method="post">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                        <input type="hidden" value="{{ order_item.id }}" id="order_item_id" name="order_item_id">
+                                        <button class="tiny circular ui negative icon button">
+                                            <i class="close icon"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            <tr class="center aligned">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <div class="ui header">
+                                        Total: ${{ order_information.total_price }}
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="pay-selection-container">
+                        <h3 class="ui top attached header">Selecciona uno de tus metodo de pago</h3>
+                        <div class="ui bottom attached segment">
+                            <table class="ui single line table">
+                                <thead>
+                                    <th>Metodo de Pago</th>
+                                    <th>Estado del metodo</th>
+                                    <th>Num. Tarjeta</th>
+                                </thead>
+                                {% if pay %}
+                                <tbody>
+                                    {% for method in pay %}
+                                        <tr>
+                                            <td>
+                                                {% for tipe in refer %}
+                                                    {% if method.payment_method_code == tipe.payment_method_code %}
+                                                        {{ tipe.payment_method_description }}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </td>
+                                            <td>
+                                                {{ method.payment_method_details }}
+                                            </td>
+                                            <td>
+                                                {{ method.credit_card_number[0:4] }}#####
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                                {% endif %}
+                            </table>
+                            <form action="{{ url_for('order.pay_order') }}" class="ui form" method="post">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                <input type="hidden" name="payment_amount" value="{{ order_information.total_price }}">
+                                <div class="center-container">
+                                    <div class="field">
+                                        <label for="payment-method-selection">Seleccione el metodo</label>
+                                        <select name="payment-method-selection" id="payment-method-selection">
+                                            {% for method in pay %}
+                                                {% if method.payment_method_details == "En funcionamiento" %}
+                                                    <option value="{{ method.id }}">{{ method.credit_card_number[0:4] }}#####</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                         <button class="ui primary button">
+                                             Pagar
+                                         </button>
+                                    </div>
+                            </form>
+                            {% if not pay %}
+                                <div class="ui warning message">
+                                    <h3 class="ui header"> Aun no has agregado ninguna forma de pago </h3>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="no-products-notice-container">
+                        <div class="ui placeholder segment">
+                            <div class="ui large header">
+                                Aun no has agregado productos al carrito
+                            </div>
+                            <div class="icon-container">
+                                <i class="massive icons">
+                                    <i class="shopping cart icon"></i>
+                                    <i class="inverted corner add icon"></i>
+                                </i>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    {{ super() }}
+
+
+{% endblock %}

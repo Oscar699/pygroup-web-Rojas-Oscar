@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add product</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/updateStockStyle.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+</head>
+<body>
+    <div class="pageContainer">
+        <div class="button-back-container">
+            <button class="ui button" onclick="goToPanel();">
+                <i class="ui left arrow icon"></i>
+            </button>
+        </div>
+        <div class="ui middle aligned center aligned grid">
+            <div class="column">
+                <h1 class="ui top attached block header">
+                    Agregar o actualiar stock de un producto
+                </h1>
+                <div class="ui bottom attached segment">
+                    <form action="{{ url_for('store.update_stock') }}" class="ui equal width form" method="POST">
+                        {{ form.csrf_token }}
+                        <div class="fields">
+                            <div class="field">
+                                <h4 class="ui header">
+                                    {{ form.product_id.label }}
+                                </h4>
+                                    {{ form.product_id(placeholder="id del producto", type="number") }}
+                            </div>
+                            <div class="field">
+                                <h4 class="ui header">
+                                    {{ form.quantity.label }}
+                                </h4>
+                                    {{ form.quantity(placeholder="Cantidad de producto", type="number") }}
+                            </div>
+                        </div>
+                        <div class="fields">
+                            <div class="centered align field">
+                                <button class="ui button" type="submit">Enviar informacion</button>
+                            </div>
+                        </div>
+                    </form>
+                    {% if message %}
+                        <div class="fields">
+                            <div class="field">
+                                <div class="ui warning message">
+                                    <h4 class="ui header"> {{ message }} </h4>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function goToPanel(){
+            location.href="{{ url_for('adminBp.admin_panel') }}"
+        }
+    </script>
+</body>
+</html>

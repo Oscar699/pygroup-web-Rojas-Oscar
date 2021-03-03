@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/homeStyle.css') }}">
+{% endblock %}
+{% block tittle %}Home{% endblock %}
+{% block content %}
+    <div class="center-container">
+        <div class="welcome-container">
+            <div class="ui vertical masthead center aligned segment">
+                <h1 class="ui header">¡Bienvenido a CompuTech Store!</h1>
+                <h2>La tienda en donde encuentras toda la tecnologia que necesitas</h2>
+                <h3>Usa el botón "Productos" para empezar a navegar por la tienda </h3>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    {{ super() }}
+
+{% endblock %}

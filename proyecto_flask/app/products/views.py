@@ -55,7 +55,7 @@ def resp(name):
 
 @products.route("/dummy-product", methods=["GET", "POST"])
 def dummy_product():
-    """This method test the request types. If is GET Type it will
+    """This method tests the request types. If is GET Type it will
     render the text Products in h1 label with code 500.
     If is POST Type it will return Empty shelve! with status code 403
     """
@@ -142,7 +142,7 @@ def create_category_form():
     return render_template('create_category_form.html', form=form_category)
 
 
-@products.route("/add-category-form-old", methods=["GET","POST"])
+@products.route("/add-category-form-old", methods=["GET", "POST"])
 def create_category_form_old():
     if request.method == 'POST':
         category = create_new_category(request.form["name"])

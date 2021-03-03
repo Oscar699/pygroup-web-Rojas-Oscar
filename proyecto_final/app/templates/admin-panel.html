@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>4DM1NS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/adminPanelStyle.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+</head>
+<body>
+    <div class="ui middle aligned center aligned grid">
+        <div class="column">
+            <h1 class="ui top attached block header">
+                ¡Bienvenido administrador {{ current_user.admin_name }}!
+            </h1>
+            <div class="ui bottom attached segment">
+                <div class="ui selection massive animated list">
+                    <div class="item" id="add-product-sect" onclick="goToProducts();">
+                        <h2><i class="small circular cube icon"></i>Agregar productos</h2>
+                    </div>
+                    <div class="item" onclick="goToCategorys();">
+                        <h2><i class="small circular cubes icon"></i> Agregar Categorias</h2>
+                    </div>
+                    <div class="item" onclick="goToStock();">
+                        <h2><i class="small circular truck icon"></i> Actualizar el Stock</h2>
+                    </div>
+                    <div class="item" onclick="goToPayMethods();">
+                        <h2><i class="small circular credit card icon"></i> Agregar metodos de pago </h2>
+                    </div>
+                    <div class="item" onclick="goToAddAdmins()">
+                        <h2><i class="small circular user plus icon"></i> Agregar administradores </h2>
+                    </div>
+                    <div class="item" onclick="Logout();">
+                        <h2><i class="small circular power off icon"></i> Cerrar Sesion </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function goToProducts(){
+            location.href = "{{ url_for('store.create_product') }}"
+        }
+        function goToCategorys(){
+            location.href = "{{ url_for('store.create_category') }}"
+        }
+        function goToStock(){
+            location.href = "{{ url_for('store.update_stock') }}"
+        }
+        function goToPayMethods(){
+            location.href = "{{ url_for('paymentMethods.create_payment_method') }}"
+        }
+        function goToAddAdmins(){
+            location.href = "{{ url_for('adminBp.add_admin') }}"
+        }
+        function Logout(){
+            location.href = "{{ url_for('userBp.logout') }}"
+        }
+    </script>
+</body>
+</html>

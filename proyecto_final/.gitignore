@@ -58,6 +58,8 @@ cover/
 # Django stuff:
 *.log
 local_settings.py
+db.sqlite3
+db.sqlite3-journal
 
 # Flask stuff:
 instance/
@@ -134,3 +136,4 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+/app/StoreDB.sqlite3

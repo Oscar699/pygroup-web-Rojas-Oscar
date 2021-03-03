@@ -1,0 +1,57 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    height: 100%;
+}
+#header{
+    background-color:#304A98;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+#sidebar-menu{
+    background-color: #121B35;
+}
+#menu{
+    width: 100%;
+}
+.logo{
+    height: 49px;
+    width: 60px;
+    margin-top: 6px;
+}
+.center-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.logo-link{
+    margin-left: 45px;
+    display: inline-flex;
+}
+#logTittle{
+    font-weight: bold;
+    color: #65BAA9;
+    margin-top: 10px;
+    font-size: 23pt;
+    margin-bottom: 20px;
+}
+#sidebar-item{
+    font-size: 12pt;
+}
+#footer-segment{
+    background-color:#304A98;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+.infoModal{
+    text-align: center;
+    font-size: 13pt;
+}
+.content{
+    padding-top: 20px;
+}
+
